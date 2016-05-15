@@ -1,4 +1,4 @@
-package com.pdy.designpattern.factory.observer;
+package com.pdy.designpattern.observer;
 
 import java.util.Observable;
 

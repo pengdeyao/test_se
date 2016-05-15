@@ -1,4 +1,4 @@
-package com.pdy.designpattern.factory.observer;
+package com.pdy.designpattern.observer;
 
 public class MainTest {
 	public static void main(String[] args) {
