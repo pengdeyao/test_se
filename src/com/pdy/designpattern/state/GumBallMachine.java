@@ -1,8 +1,9 @@
 package com.pdy.designpattern.state;
 
 /**
- * 状态模式之---糖果|彩蛋机
- * @author pdy
+ * 状态模式之---糖果|彩蛋机<BR>
+ * 建议将状态变化放入 彩蛋机中控制，不然状态太多时看代码不知道怎么流转的
+ * @author pdy 
  *
  */
 public class GumBallMachine {
