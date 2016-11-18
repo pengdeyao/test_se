@@ -2,9 +2,9 @@ package com.pdy.callback;
 
 public class Invoke {
 
-    private Callbackble callbackble;
+    private ICallback callbackble;
     
-    public Invoke(Callbackble callbackble) {
+    public Invoke(ICallback callbackble) {
         super();
         this.callbackble = callbackble;
     }
