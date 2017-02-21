@@ -23,8 +23,9 @@ public class MainTest {
         System.out.println("++++++++++++++++++");
         testScatter(filePath);
         System.out.println("++++++++++++++++++");
-        // testSocketChannel();
-        // 测试发送http失败 testSelectorAndSocketChannel();
+        testSocketChannel();
+        // 测试发送http失败
+        // testSelectorAndSocketChannel();
 	}
 
 
@@ -104,17 +105,19 @@ public class MainTest {
         SocketChannel baidu = SocketChannel.open();
         baidu.connect(new InetSocketAddress("www.baidu.com", 80));
         ByteBuffer buffer = ByteBuffer.allocate(10000);
-
+        if (baidu.isConnected()) {
         buffer.put("GET / HTTP/1.1\n\n\n".getBytes());
         buffer.flip();
         while (buffer.hasRemaining()) {
             baidu.write(buffer);
         }
+            buffer.clear();
         baidu.read(buffer);
         buffer.flip();
         System.out.println(new String(buffer.array()));
         baidu.close();
         }
+    }
 
 
     /**
@@ -136,31 +139,46 @@ public class MainTest {
         ByteBuffer neteasBuffer = ByteBuffer.allocate(100);
         // channel注册到selector
         Map<SelectionKey,ByteBuffer> bufferMap = new HashMap<SelectionKey,ByteBuffer>();
-        bufferMap.put(baidu.register(selector, SelectionKey.OP_WRITE), baiduBuffer);
-        bufferMap.put(neteas.register(selector, SelectionKey.OP_WRITE), neteasBuffer);
-        
+        bufferMap.put(baidu.register(selector, SelectionKey.OP_CONNECT), baiduBuffer);
+        bufferMap.put(neteas.register(selector, SelectionKey.OP_CONNECT), neteasBuffer);
+
         while (true) {
             int readyChannels = selector.select();
             if (readyChannels == 0) {
-                continue;
+                if (baidu.isConnected()) {
+                    baiduBuffer.put("GET / HTTP/1.1\n\n\n".getBytes());
+                    baiduBuffer.flip();
+                    while (baiduBuffer.hasRemaining()) {
+                        baidu.write(baiduBuffer);
+                    }
+                }
+                baiduBuffer.clear();
+                if (neteas.isConnected()) {
+                    neteasBuffer.put("GET / HTTP/1.1\n\n\n".getBytes());
+                    neteasBuffer.flip();
+                    while (neteasBuffer.hasRemaining()) {
+                        neteas.write(neteasBuffer);
+                    }
+
+                }
+                neteasBuffer.clear();
+            } else {
+                System.out.println("hahaha");
+
             }
             Set<SelectionKey> selectorKes = selector.selectedKeys();
             Iterator<SelectionKey> keysIterator = selectorKes.iterator();
             while (keysIterator.hasNext()) {
                 SelectionKey key = keysIterator.next();
+                keysIterator.remove();
                 ByteBuffer buffer = bufferMap.get(key);
+                System.out.println(key);
                 if (key.isReadable()) {
                     SocketChannel channel = (SocketChannel) key.channel();
                     int pos = 0;
                     while ((pos = channel.read(buffer)) != -1) {
                         buffer.flip();
                         System.out.println(new String(buffer.array()));
-                    }
-                } else if (key.isWritable()) {
-                    buffer.put("GET / HTTP/1.1\n\n\n".getBytes());
-                    buffer.flip();
-                    while (buffer.hasRemaining()) {
-                        baidu.write(buffer);
                     }
                 }
             }
