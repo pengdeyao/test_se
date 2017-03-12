@@ -56,7 +56,7 @@ class Producter implements Runnable {
                 // 锁定仓库避免并发生产或消费
                 synchronized (respository) {
                     if (respository.size() >= maxCapcity) {
-                        respository.notifyAll();
+//                        respository.notifyAll();
                         System.out.println(Thread.currentThread().getName() + "生产者等待");
                         respository.wait();//
                     }
@@ -87,7 +87,7 @@ class Consumer implements Runnable {
                 synchronized (respository) {
 
                     if (respository.isEmpty()) {
-                        respository.notifyAll();
+//                        respository.notifyAll();
                         System.out.println(Thread.currentThread().getName() + "消费者等待");
                         respository.wait();
                         System.out.println(Thread.currentThread().getName() + "消费者等待后被唤醒");
