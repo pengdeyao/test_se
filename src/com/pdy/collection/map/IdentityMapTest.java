@@ -17,6 +17,8 @@ public class IdentityMapTest {
         System.out.println(identityHashMap.containsKey(key2));
         System.out.println(identityHashMap.containsKey(key3));
         System.out.println(identityHashMap.containsKey(key4));
+        System.out.println(key3 == key4);
+        System.out.println(key1 == key2);
     }
 
 }
