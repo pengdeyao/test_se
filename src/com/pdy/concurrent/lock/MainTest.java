@@ -11,6 +11,7 @@ public class MainTest {
         Counter counter2 = new Counter2(new MyLock2());// 测试可重入锁
         Counter counter3 = new Counter3(new MyReadWriteLock()); // 测试读写锁
         Counter counter4 = new Counter4(new MyReenterReadWriteLock()); // 测试读写锁
+        Counter counter5 = new Counter4(new JdkReadWriteLock());// 测试ReentrantReadWriteLock
         // test(counter1);
         // test(counter2);
         // testReadWrite(counter3);

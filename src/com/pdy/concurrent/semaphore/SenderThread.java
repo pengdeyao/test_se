@@ -17,7 +17,7 @@ public class SenderThread implements Runnable {
     public void run() {
         for (;;) {
             semaphore.release();
-            System.out.println(Thread.currentThread().getName() + "释放一个资源到信号量");
+            System.out.println(Thread.currentThread().getName() + "释放一个许可到信号量,剩余许可" + semaphore.availablePermits());
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
