@@ -15,6 +15,9 @@ public class TimeTrace {
         timeList.add(currentTimeMillis);
     }
 
+    public static void clear(){
+        timeList = new ArrayList<>();
+    }
 
     public static String getString() {
         StringBuilder builder = new StringBuilder();
