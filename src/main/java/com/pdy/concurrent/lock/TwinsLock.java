@@ -12,6 +12,11 @@ public class TwinsLock {
 
     private Sync sync = new Sync(2);
 
+    /**
+     * 自己实现一个同步器，基于同步器共享模式，实现 tryAcquireShared tryReleaseShared 方法
+     * 通过维护status >=0  <=2 来实现可获得许可的线程数控制。
+     *
+     */
     private static final class Sync extends AbstractQueuedSynchronizer{
 
         public Sync(int count){
