@@ -5,6 +5,7 @@ import com.sun.org.apache.bcel.internal.classfile.Code;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.concurrent.Executor;
+import java.util.regex.Pattern;
 
 
 /**
@@ -13,6 +14,12 @@ import java.util.concurrent.Executor;
  */
 public class ZKTest {
     public static void main(String[] args) throws Exception {
+
+
+            Pattern p =  Pattern.compile("/a/b");
+            System.out.println(p.matcher("/s/3/3").matches());
+
+
 /*        ZooKeeper zk = new ZooKeeper("localhost:2181", 3000, new Watcher() {
             @Override
             public void process(WatchedEvent event) {
