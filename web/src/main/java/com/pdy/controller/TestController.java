@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.LastModified;
 
+import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,6 +27,9 @@ import java.util.concurrent.TimeUnit;
 public class TestController  {
 
     private long ca = System.currentTimeMillis();
+
+    @Resource
+    private MyService myService;
 
     @RequestMapping("/test")
     @ResponseBody
@@ -43,6 +47,8 @@ public class TestController  {
         if(webRequest.checkNotModified(ca)){
             return null;
         }
+
+
         return ResponseEntity.ok("ok");
 //        设置页面缓存
 //        return ResponseEntity.ok().cacheControl(CacheControl.maxAge(1,TimeUnit.MINUTES)).eTag("1").body("ok");
@@ -55,7 +61,7 @@ public class TestController  {
 
        Object obj =  ApplicationContextUtil.getContext().getBean("myFactoryBean");
         System.out.println("###### my factory bean "+obj);
-
+        System.out.println("do service"+ myService.doSomething());
         for(String beadefinitionName : ApplicationContextUtil.getContext().getBeanDefinitionNames()){
             System.out.println(beadefinitionName);
         }
