@@ -12,6 +12,7 @@ import java.util.List;
 public class StringIntern {
 
     public static void main(String[] args) {
+
         System.out.println(System.getProperties());
         String s = new String("BB"); //堆中创建了一个对象,并返回引用，并添加BB到常量池
         String ss = "BB"; // 想在常量池中查找BB，存在返回BB的引用
@@ -19,5 +20,9 @@ public class StringIntern {
         System.out.println(s == ss);
         System.out.println(ss == sss);
         System.out.println(s == sss);
+
+        String a = "aa";
+        String b = "aa";
+        System.out.println(a == b);
     }
 }
